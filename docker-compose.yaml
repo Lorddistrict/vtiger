@@ -1,0 +1,41 @@
+---
+services:
+
+  database:
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - vtiger_data:/data
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vtigerdb
+    networks:
+      - vtiger_net
+
+  vtiger:
+    image: javanile/vtiger:7.1.0-php7.4
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9000:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./:/app
+      - vtiger:/var/lib/vtiger
+    environment:
+      VT_SITE_URL: http://localhost:9000
+      MYSQL_HOST: database
+      MYSQL_DATABASE: vtigerdb
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - database
+    networks:
+      - vtiger_net
+
+networks:
+  vtiger_net:
+
+volumes:
+  vtiger_data:
+  vtiger:
