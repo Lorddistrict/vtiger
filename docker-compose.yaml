@@ -15,7 +15,8 @@ services:
       - vtiger_net
 
   vtiger:
-    image: javanile/vtiger:7.1.0-php7.4
+#    image: javanile/vtiger:7.1.0-php7.4
+    build: .
     restart: unless-stopped
     ports:
       - "127.0.0.1:9000:80"
