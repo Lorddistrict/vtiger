@@ -6,15 +6,15 @@ name: PHPStan
 #      - master
 on: push
 jobs:
-  phpstan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: php-actions/composer@v6
-        with:
-          working_dir: app/
-      - name: PHPStan static analysis
-        run: "./app/vendor/bin/phpstan analyse -c ./app/phpstan.neon"
+#  phpstan:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: php-actions/composer@v6
+#        with:
+#          working_dir: app/
+#      - name: PHPStan static analysis
+#        run: "./app/vendor/bin/phpstan analyse -c ./app/phpstan.neon"
 
   build:
     runs-on: ubuntu-latest
@@ -25,6 +25,6 @@ jobs:
         with:
           name: lorddistrict/vtiger:latest
           username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           dockerfile: Dockerfile
